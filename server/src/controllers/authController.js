@@ -6,6 +6,7 @@ export const login = async (req, res) => {
         const { username, password } = req.body;
 
         const admin = await Admin.findOne({ where: { username } });
+
         if (!admin) {
             return res.status(401).json({
                 success: false,
@@ -14,6 +15,7 @@ export const login = async (req, res) => {
         }
 
         const isMatch = await admin.comparePassword(password);
+
         if (!isMatch) {
             return res.status(401).json({
                 success: false,

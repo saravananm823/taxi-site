@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 
 const AdminLogin = () => {
-    const [credentials, setCredentials] = useState({ username: '', password: '' });
+    const [credentials, setCredentials] = useState({ username: 'saravanan', password: '123456' });
     const [loading, setLoading] = useState(false);
     const { login } = useAuth();
     const navigate = useNavigate();
@@ -15,12 +15,14 @@ const AdminLogin = () => {
         e.preventDefault();
         setLoading(true);
         try {
+            console.log(credentials);
             const response = await api.post('/auth/login', credentials);
             if (response.data.success) {
                 login(response.data.token);
                 toast.success('Welcome back, Admin!');
                 navigate('/admin/dashboard');
             }
+            console.log(response);
         } catch (error) {
             toast.error(error.response?.data?.message || 'Login failed. Check credentials.');
         } finally {
